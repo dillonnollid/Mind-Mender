@@ -18,14 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-//Define resource controller routes
-Route::resource('blogs', BlogController::class);
-Route::resource('videos', VideoController::class);
-Route::resource('podcasts', PodcastController::class);
+//Define resource controller routes, only accessible for authenticated users!
+Route::resource('blogs', BlogController::class)->middleware('auth');
+Route::resource('videos', VideoController::class)->middleware('auth');
+Route::resource('podcasts', PodcastController::class)->middleware('auth');
 
-
+//Define preset authentication routes
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
